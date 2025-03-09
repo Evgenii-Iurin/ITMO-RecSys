@@ -1,11 +1,16 @@
 from typing import List
+from enum import Enum
 
-from fastapi import APIRouter, FastAPI, Request
+from fastapi import APIRouter, FastAPI, Path, Request
 from pydantic import BaseModel
 
-from service.api.exceptions import UserNotFoundError
+from service.api.exceptions import ModelNotFoundError, UserNotFoundError
 from service.log import app_logger
 
+
+class ModelName(str, Enum):
+    TEST = "test_model"
+    MOCK = "mock_model"
 
 class RecoResponse(BaseModel):
     user_id: int
@@ -35,7 +40,12 @@ async def get_reco(
 ) -> RecoResponse:
     app_logger.info(f"Request for model: {model_name}, user_id: {user_id}")
 
-    # Write your code here
+    try:
+        ModelName(model_name)
+    except ValueError:
+        raise ModelNotFoundError(
+            error_message=f"Model {model_name} not found. Available models: {[m.value for m in ModelName]}"
+        )
 
     if user_id > 10**9:
         raise UserNotFoundError(error_message=f"User {user_id} not found")
