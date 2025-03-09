@@ -40,6 +40,7 @@ def test_get_reco_for_unknown_user(
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json()["errors"][0]["error_key"] == "user_not_found"
 
+
 def test_get_reco_for_unknown_model(
     client: TestClient,
 ) -> None:
