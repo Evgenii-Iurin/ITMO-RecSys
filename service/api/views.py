@@ -1,7 +1,7 @@
-from typing import List
 from enum import Enum
+from typing import List
 
-from fastapi import APIRouter, FastAPI, Path, Request
+from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
 
 from service.api.exceptions import ModelNotFoundError, UserNotFoundError
@@ -11,6 +11,7 @@ from service.log import app_logger
 class ModelName(str, Enum):
     TEST = "test_model"
     MOCK = "mock_model"
+
 
 class RecoResponse(BaseModel):
     user_id: int
