@@ -1,135 +1,145 @@
-# Шаблон сервиса рекомендаций
+# Recommendation Service Template
 
-## Подготовка
+## Setup
 
 ### Python
 
-В данном шаблоне используется Python3.9, однако вы можете использовать и другие версии, если хотите. 
-Но мы не гарантируем, что все будет работать.
+This template uses Python 3.9, but you can use other versions if you prefer.
+However, we don't guarantee that everything will work with other versions.
 
 ### Make
 
-[Make](https://www.gnu.org/software/make/) - это очень популярная утилита, 
-предназначенная для преобразования одних файлов в другие через определенную последовательность команд. 
-Однако ее можно использовать для исполнения произвольных последовательностей команд. 
-Команды и правила их исполнения прописываются в `Makefile`.
+[Make](https://www.gnu.org/software/make/) is a very popular utility
+designed for transforming files using a defined sequence of commands.
+However, it can also be used to execute arbitrary command sequences.
+These commands and rules are specified in the `Makefile`.
 
-Мы будем активно использовать `make` в данном проекте, поэтому рекомендуем познакомится с ней поближе. 
+We will actively use `make` in this project, so we recommend getting familiar with it.
 
-На MacOS и *nix системах `make` обычно идет в комплекте или ее можно легко установить. 
-Некоторые варианты, как можно поставить `make` на `Windows`,
-описаны [здесь](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows).
+On macOS and \*nix systems, `make` is usually pre-installed or can be easily installed.
+Some ways to install `make` on Windows are described [here](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows).
 
 ### Poetry
 
-[Poetry](https://python-poetry.org/) - это удобный инструмент для работы с зависимостями в Python. 
-Мы будем использовать его для подготовки окружения.
+[Poetry](https://python-poetry.org/) is a handy tool for dependency management in Python.
+We'll use it to set up the environment.
 
-Поэтому перед началом работы необходимо выполнить [шаги по установке](https://python-poetry.org/docs/#installation).
+So before getting started, you should follow [the installation steps](https://python-poetry.org/docs/#installation).
 
+## Virtual Environment
 
-## Виртуальное окружение
+We'll work within a virtual environment created specifically for this project.
+If you're unfamiliar with the concept of virtual environments in Python,
+make sure to read [this tutorial](https://docs.python.org/3.8/tutorial/venv.html).
+We recommend using a separate virtual environment for each of your projects.
 
-Мы будем работать в виртуальном окружении, которое создадим специально для данного проекта. 
-Если вы не знакомы с концепцией виртуальных окружений в Python, обязательно 
-[познакомьтесь](https://docs.python.org/3.8/tutorial/venv.html). 
-Мы рекомендуем использовать отдельное виртуальное окружение для каждого вашего проекта.
+### Environment Initialization
 
-### Инициализация окружения
+Run the command:
 
-Выполните команду
 ```
 make setup
 ```
 
-Будет создано новое виртуальное окружение в папке `.venv`.
-В него будут установлены пакеты, перечисленные в файле `pyproject.toml`.
+This will create a new virtual environment in the `.venv` folder.
+It will install the packages listed in `pyproject.toml`.
 
-Обратите внимание: если вы один раз выполнили `make setup`, при попытке повторного ее выполнения ничего не произойдет, 
-поскольку единственная ее зависимость - директория `.venv` - уже существует.
-Если вам по какой-то причине нужно пересобрать окружение с нуля, 
-выполните сначала команду `make clean` - она удалит старое окружение.
+Note: If you've already run `make setup` once, running it again will do nothing,
+since its only dependency – the `.venv` directory – already exists.
+If you need to rebuild the environment from scratch for any reason,
+first run `make clean` to delete the old environment.
 
-### Установка/удаление пакетов
+### Installing/Removing Packages
 
-Для установки новых пакетов используйте команду `poetry add`, для удаления - `poetry remove`. 
-Мы не рекомендуем вручную редактировать секцию с зависимостями в `pyproject.toml`.
+To install new packages, use `poetry add`; to remove them, use `poetry remove`.
+We do not recommend manually editing the dependency section in `pyproject.toml`.
 
-## Линтеры, тесты и автоформатирование
+## Linters, Tests, and Autoformatting
 
-### Автоформатирование
+### Autoformatting
 
-Командой `make format` можно запустить автоматическое форматирование вашего кода.
+Run:
 
-Ее выполнение приведет к запуску [isort](https://github.com/PyCQA/isort) - утилиты 
-для сортировки импортов в нужном порядке, и [black](https://github.com/psf/black) - одного из самых популярных форматтеров для `Python`.
+```
+make format
+```
 
+This will auto-format your code using [isort](https://github.com/PyCQA/isort)
+(for sorting imports) and [black](https://github.com/psf/black),
+one of the most popular formatters for Python.
 
-### Статическая проверка кода
+### Static Code Checks
 
-Командой `make lint` вы запустите проверку линтерами - инструментами для статического анализа кода. 
-Они помогают выявить ошибки в коде еще до его запуска, а также обнаруживают несоответствия стандарту 
-[PEP8](https://peps.python.org/pep-0008). 
-Среди линтеров есть те же `isort` и `black`, только в данном случае они уже ничего не исправляют, а просто проверяют, что код отформатирован правильно.
+Run:
 
-### Тесты
+```
+make lint
+```
 
-Командой `make test` вы запустите тесты при помощи утилиты [pytest](https://pytest.org/). 
+This will run linters – tools for static code analysis.
+They help catch errors before the code is run and enforce the [PEP8](https://peps.python.org/pep-0008) style guide.
+This includes the same tools `isort` and `black`, but in this case, they only check formatting without modifying code.
 
+### Tests
 
-## Запуск приложения
+Run:
 
-### Способ 1: Python + Uvicorn
+```
+make test
+```
+
+This will run tests using the [pytest](https://pytest.org/) tool.
+
+## Running the Application
+
+### Method 1: Python + Uvicorn
 
 ```
 python main.py
 ```
 
-Приложение запустится локально, в одном процессе. 
-Хост и порт по умолчанию: `127.0.0.1` и `8080`.
-Их можно изменить через переменные окружения `HOST` и `PORT`.
+This runs the app locally in a single process.
+Default host and port: `127.0.0.1` and `8080`.
+These can be changed using the `HOST` and `PORT` environment variables.
 
-Управляет процессом легковесный [ASGI](https://asgi.readthedocs.io/en/latest/) server [uvicorn](https://www.uvicorn.org/).
+The process is managed by the lightweight [ASGI](https://asgi.readthedocs.io/en/latest/) server [uvicorn](https://www.uvicorn.org/).
 
-Обратите внимание: для запуска нужно использовать `python` из окружения проекта.
+Note: You must use the Python interpreter from the project's virtual environment.
 
-### Способ 2: Uvicorn
+### Method 2: Uvicorn
 
 ```
 uvicorn main:app
 ```
 
-Очень похож на предыдущий, только запуск идет напрямую.
-Хост и порт можно передать через аргументы командной строки.
+This is very similar to the previous method but starts the app directly.
+Host and port can be passed via command-line arguments.
 
-Обратите внимание: для запуска нужно использовать `uvicorn` из окружения проекта.
+Note: You must use the `uvicorn` from the project's environment.
 
-
-### Способ 3: Gunicorn
+### Method 3: Gunicorn
 
 ```
 gunicorn main:app -c gunicorn.config.py
 ```
 
-Способ похож на предыдущий, только вместо `uvicorn` используется
-более функциональный сервер [gunicorn](https://gunicorn.org/) (`uvicorn` используется внутри него).
-Параметры задаются через конфиг, хост и порт можно задать 
-через переменные окружения или аргументы командной строки.
+Similar to the previous method, but uses the more feature-rich server [gunicorn](https://gunicorn.org/)
+(`uvicorn` is used internally). Parameters are specified via a config file,
+and host/port can be set via environment variables or command-line arguments.
 
-Сервис запускается в несколько параллельных процессов, по умолчанию их число
-равно числу ядер процессора.
+This launches the service with multiple parallel processes – by default, one per CPU core.
 
-Обратите внимание: для запуска нужно использовать `gunicorn` из окружения проекта.
+Note: You must use `gunicorn` from the project's environment.
 
-### Способ 4: Docker
+### Method 4: Docker
 
-Делаем все то же самое, но внутри docker-контейнера. 
-Если вы не знакомы с [docker](https://www.docker.com/), обязательно познакомьтесь.
+Same as above, but inside a Docker container.
+If you're not familiar with [Docker](https://www.docker.com/), it's worth learning.
 
-Внутри контейнера можно использовать любой из способов, описанных выше.
-В продакшене рекомендуется использовать `gunicorn`.
+Inside the container, you can use any of the above methods.
+In production, it's recommended to use `gunicorn`.
 
-Собрать и запустить образ можно командой
+To build and run the Docker image, use:
 
 ```
 make run
@@ -137,11 +147,11 @@ make run
 
 ## CI/CD
 
-Когда вы выполняете какое-то действие (прописанное в конфиге), запускается процесс CI. 
-Что именно происходит в этом процессе и как он триггерится, 
-описывается в специальных `.yaml`/`.yml` конфигах в папке `.github/workflows`.
+When you perform an action specified in the config, a CI (Continuous Integration) process is triggered.
+What exactly happens and how it’s triggered is defined in special `.yaml`/`.yml` config files in the `.github/workflows` folder.
 
-Сейчас там есть только один конфиг `test.yml`, который запускает процесс, в котором создается виртуальное окружение,
-прогоняются линтеры и тесты. Если что-то пошло не так, процесс падает с ошибкой и в Github появляется красный крестик.
-Вам нужно посмотреть логи, исправить ошибку и запушить изменения.
-Этот процесс тригеррится при создании и обновлении пулл-реквеста, а также по пушу в `master`. 
+Currently, there’s only one config: `test.yml`, which creates a virtual environment,
+runs linters and tests. If something goes wrong, the process fails, and a red cross appears in GitHub.
+You should check the logs, fix the issue, and push the changes again.
+
+This process is triggered when creating or updating a pull request, or when pushing to `master`.
